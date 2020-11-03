@@ -18,11 +18,35 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+     <!-- Bootstrap core CSS -->
+  <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{asset('assets/css/font-awesome.min.css')}}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="{{asset('assets/css/added_style.css')}}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
         @include('layouts.header')
+        @yield('content')
         @include('layouts.footer')
+       
+
     </div>
+    <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('.switch-tologin-modal').on('click',function(){
+      $('#register-modal').modal('hide');
+      $('#login-modal').modal('show');
+    })
+    $('.switch-toregister-modal').on('click',function(){
+      $('#login-modal').modal('hide');
+      $('#register-modal').modal('show');
+    })
+  })
+</script>
 </body>
 </html>
