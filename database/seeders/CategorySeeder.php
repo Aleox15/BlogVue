@@ -13,6 +13,21 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        //
+        \App\Models\Category::create([
+            'name'=>'html tutorials',
+            'slug'=>'html-tutorials',
+        ]);
+        \App\Models\Category::create([
+            'name'=>'js tutorials',
+            'slug'=>'js-tutorials',
+        ]);
+        \App\Models\Category::create([
+            'name'=>'laravel tutorials',
+            'slug'=>'laravel-tutorials',
+        ]);
+        \App\Models\Category::create([
+            'name'=>'vue js tutorials',
+            'slug'=>'vue-js-tutorials',
+        ]);
     }
 }

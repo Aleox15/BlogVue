@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 use App\Models\User;
+use App\Models\Comment;
 class Post extends Model
 {
     use HasFactory;
@@ -19,6 +20,9 @@ class Post extends Model
     }
     public function getRouteKeyName(){
         return 'slug';
+    }
+    public function comments(){
+        $this->hasMany(Comment::class);
     }
 
 }

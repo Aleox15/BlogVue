@@ -21,14 +21,7 @@ class ForeignKey extends Migration
             ->onDelete('cascade');
            
         });
-        Schema::table('posts', function (Blueprint $table) {
-            $table->foreign('category_id')
-            ->references('id')
-            ->on('categories')
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
-           
-        });
+        
         Schema::table('comments', function (Blueprint $table) {
             $table->foreign('user_id')
             ->references('id')
