@@ -13,16 +13,16 @@ class Post extends Model
     protected $guarded = [''];
 
     public function category(){
-        $this->belogsTo(Category::class);
+        return $this->belongsTo(Category::class);
     }
     public function user(){
-        $this->belogsTo(User::class);
+        return $this->belongsTo(User::class);
+    }
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }
     public function getRouteKeyName(){
         return 'slug';
-    }
-    public function comments(){
-        $this->hasMany(Comment::class);
     }
 
 }
