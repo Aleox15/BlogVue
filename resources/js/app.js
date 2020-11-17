@@ -20,7 +20,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('home', require('./components/Home.vue').default);
+Vue.component('global-component', require('./components/GlobalComponent.vue').default);
 
 
 /**
@@ -28,7 +28,8 @@ Vue.component('home', require('./components/Home.vue').default);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
+import router from './routes/routes'
 const app = new Vue({
-    el: '#app',
+    el: "#app",
+    router
 });

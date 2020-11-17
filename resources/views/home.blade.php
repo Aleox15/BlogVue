@@ -17,7 +17,7 @@
 
         <!-- Blog Post -->
         
-        <home></home>
+        <global-component></global-component>
       
 
         <!-- Pagination -->

@@ -12,6 +12,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+   
     public function index()
     {
        $posts =  Post::latest()->get();
@@ -51,7 +52,31 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+
+        return response()->json([
+            'id'=>$post->id,
+            'slug'=>$post->slug,
+            'body'=>$post->body,
+            'added_at'=>$post->created_at->diffForHumans(),
+            'comment_count'=>$post->comments->count(),
+            'image'=>$post->image,
+            'user'=>$post->user,
+            'title'=>$post->title,
+            'category'=>$post->category,
+            'comments'=>$this->commentsFormatted($post->comments),
+        ]);
+    }
+    public function commentsFormatted($comments){
+        $newComments = [];
+
+        foreach($comments as $comment){
+            array_push($newComments,[
+                'id'=>$comment->id,
+                'body'=>$comment->body,
+                'user'=>$comment->comment->user,
+                'added_at'=>$comment->created_at->diffForHumans(),
+            ]);
+        }
     }
 
     /**
