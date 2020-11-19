@@ -73,10 +73,11 @@ class PostController extends Controller
             array_push($newComments,[
                 'id'=>$comment->id,
                 'body'=>$comment->body,
-                'user'=>$comment->comment->user,
+                'user'=>$comment->user,
                 'added_at'=>$comment->created_at->diffForHumans(),
             ]);
         }
+        return $newComments;
     }
 
     /**
