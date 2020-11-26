@@ -1,12 +1,15 @@
 <template>
     <div class="row">
         <!-- Blog Entries Column -->
-        <div class="col-md-8">
+        <div v-if="issearching" class="col-md-8">
+            <h2>Is Searching ....</h2>
+            </div>
+        <div v-else class="col-md-8">
             <h1 class="my-4">Page Heading
             <small>Secondary Text</small>
             </h1>
             <div class="container">
-                <div class="media simple-post" v-for="post in  posts" :key="post.id">
+                <div class="media simple-post" v-for="post in  posts.data" :key="post.id">
                 <img class="mr-3" :src="'/img/'+post.image" alt="Generic placeholder image">
                     <div class="media-body">
                         <h4><router-link :to="'/posts/'+post.slug">{{post.title}}</router-link></h4>
@@ -21,24 +24,8 @@
                         </ul>
                     </div>
                 </div>
-                <nav aria-label="...">
-                <ul class="pagination float-right">
-                    <li class="page-item disabled">
-                    <span class="page-link">Previous</span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active">
-                    <span class="page-link">
-                        2
-                        <span class="sr-only">(current)</span>
-                    </span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-                </nav>
+                <pagination :data="posts" @pagination-change-page="getPosts"></pagination>
+
             </div>
         </div>
 
@@ -49,7 +36,7 @@
             <h5 class="card-header">Search</h5>
             <div class="card-body">
                 <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for...">
+                <input type="text" class="form-control" v-model="searchpost" placeholder="Search for...">
                 <span class="input-group-btn">
                     <button class="btn btn-secondary" type="button">Go!</button>
                 </span>
@@ -70,26 +57,47 @@ import categories from './Categories.vue';
     export default {
         data(){
             return{
-                posts:[]
+                posts:{},
+                searchpost:'',
+                issearching : false,
             }
         },
         components:{
             categories
         },
+        watch:{
+            searchpost(query){
+                if(query.length>0){
+                    axios.get('/api/searchposts/'+query)
+                    .then(res=>{
+                    this.issearching = true;
+                    setTimeout(()=>{ this.posts = res.data; this.issearching = false;}, 2000);
+
+                        
+                    })
+                    .catch(err=>{
+                        console.log(err);
+                    })
+                    }
+               
+            }
+        },
         mounted(){
-            this.GetPosts();
+            this.getPosts();
 
         },
         methods:{
             Hello(){
                 console.log('Hello')
             },
-            GetPosts(){
-                  axios.get('api/posts')
+            getPosts(page){
+                  axios.get('api/posts?page=' + page)
                   .then(res=>{
                       this.posts = res.data
                   })
-                  .catch()
+                  .catch(err=>{
+                      console.log(err);
+                  })
             }
         },
        
